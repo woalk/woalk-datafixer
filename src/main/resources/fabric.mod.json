@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "wdf",
+  "version": "${version}",
+  "name": "Datafixer",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "GPL-3.0-or-later",
+  "icon": "assets/wdf/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.woalk.mods.datafixer.DatafixerMod"
+    ],
+    "preLaunch": [
+      "com.woalk.mods.datafixer.DatafixerPreLaunch"
+    ]
+  },
+  "mixins": [
+    "wdf.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
