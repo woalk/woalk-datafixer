@@ -10,12 +10,12 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
 
 object ModBlocks {
-    val unknownBlock = register(id("unknown"), ::Block, BlockBehaviour.Properties.of())
-//    val testBlock = register(id("test_block"), ::Block, BlockBehaviour.Properties.of())
+    val unknownBlock = register(id("unknown"), ::Block, BlockBehaviour.Properties.of()) { it.rarity(Rarity.EPIC) }
 
     //region Helpers
     fun id(id: String): BlockItemId {
@@ -32,11 +32,14 @@ object ModBlocks {
     }
 
     fun register(
-        id: BlockItemId, blockFactory: (BlockBehaviour.Properties) -> Block, settings: BlockBehaviour.Properties
+        id: BlockItemId,
+        blockFactory: (BlockBehaviour.Properties) -> Block,
+        settings: BlockBehaviour.Properties,
+        itemSettingsBuilder: (Item.Properties) -> Item.Properties = { it }
     ): Block {
         val block = register(id.block, blockFactory, settings)
 
-        val blockItem = BlockItem(block, Item.Properties().useBlockDescriptionPrefix().setId(id.item))
+        val blockItem = BlockItem(block, itemSettingsBuilder(Item.Properties().useBlockDescriptionPrefix().setId(id.item)))
         Registry.register(BuiltInRegistries.ITEM, id.item, blockItem)
 
         return block
