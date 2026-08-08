@@ -1,3 +1,6 @@
 {
-  "parent": "wdf:block/unknown"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "wdf:block/unknown"
+  }
 }

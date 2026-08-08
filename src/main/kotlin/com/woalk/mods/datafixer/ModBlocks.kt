@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour
 
 object ModBlocks {
     val unknownBlock = register(id("unknown"), ::Block, BlockBehaviour.Properties.of())
+//    val testBlock = register(id("test_block"), ::Block, BlockBehaviour.Properties.of())
 
     //region Helpers
     fun id(id: String): BlockItemId {

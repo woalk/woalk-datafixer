@@ -7,6 +7,8 @@ import java.nio.file.Paths
 
 object ConfigReader {
     fun blockMapping() = readCsv("block_mapping.csv")
+    fun itemMapping() = readCsv("item_mapping.csv")
+    fun biomeMapping() = readCsv("biome_mapping.csv")
 
     private fun readCsv(fileName: String): Map<String, String> {
         val path = Paths.get(FabricLoader.getInstance().configDir.toString(), "datafixer", fileName)

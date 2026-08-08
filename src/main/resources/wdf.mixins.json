@@ -4,6 +4,7 @@
   "package": "com.woalk.mods.datafixer.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "MappedRegistryMixin",
     "PalettedContainerFactoryMixin"
   ],
   "injectors": {
