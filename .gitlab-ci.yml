@@ -8,6 +8,10 @@ cache:
   paths:
     - .gradle/caches/
     - .gradle/wrapper/
+    - .gradle/loom-cache/
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build:
   stage: build
