@@ -1,6 +1,12 @@
-# ![Logo](./src/main/resources/assets/wdf/icon.png){height=32px} Woalk Datafixer
+# ![Logo](./src/main/resources/assets/wdf/icon.png){height=42px} Woalk Datafixer
 
-Woalk Datafixer is a Fabric mod designed to handle missing or changed blocks, items, and biomes when loading Minecraft worlds. It allows for seamless remapping of registry entries using CSV mapping tables and provides a fallback for items that are completely missing from the registries.
+Woalk Datafixer is a Fabric mod designed to handle missing or changed blocks, items, and biomes when loading Minecraft worlds.
+It allows for seamless remapping of registry entries using CSV mapping tables and provides a fallback for items that are completely missing from the registries.
+
+This mod is designed for long-running modded multiplayer servers that,
+when updating to a new Minecraft version,
+have to swap out old mods with newer ones, often having other namespaces or item names,
+and need to preserve world data.
 
 ## Features
 
@@ -14,6 +20,9 @@ Woalk Datafixer is a Fabric mod designed to handle missing or changed blocks, it
 - **Dependencies**: 
     - Fabric API
     - Easy Data Fix
+
+For multiplayer servers, the mod needs to be installed on both client and server,
+to ensure that the fallback item is properly registered.
 
 ## Configuration
 
