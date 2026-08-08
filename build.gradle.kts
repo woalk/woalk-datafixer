@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "2.4.10"
     id("net.fabricmc.fabric-loom") version "1.17.18"
-    id("maven-publish")
+    id("com.modrinth.minotaur") version "2.+"
 }
 
 version = project.property("mod_version") as String
@@ -87,20 +87,14 @@ tasks.jar {
     }
 }
 
-// configure the maven publication
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            artifactId = project.property("archives_base_name") as String
-            from(components["java"])
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
+modrinth {
+    token.set(System.getenv("MODRINTH_TOKEN"))
+    projectId.set("wdf")
+    versionType.set("release")
+    uploadFile.set(tasks.jar)
+    dependencies {
+        required.project("fabric-api")
+        required.project("fabric-language-kotlin")
+        required.project("easy-data-fix")
     }
 }
