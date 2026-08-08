@@ -16,11 +16,20 @@ object ConfigReader {
             LOGGER.error("Config file {} not found", fileName)
             return emptyMap()
         }
-        val csvReader = csvReader()
-        return csvReader.readFromFile(path.toString()) { rows ->
-            return@readFromFile rows.toList().associate {
-                Pair(it[0], it[1])
+        try {
+            val csvReader = csvReader()
+            return csvReader.readFromFile(path.toString()) { rows ->
+                if (rows.first().size != 2) {
+                    LOGGER.error("Invalid config file {}: Expected 2 columns, found {}", fileName, rows.first().size)
+                    return@readFromFile emptyMap()
+                }
+                return@readFromFile rows.toList().associate {
+                    Pair(it[0], it[1])
+                }
             }
+        } catch (e: Exception) {
+            LOGGER.error("Error reading config file {}", fileName, e)
+            return emptyMap()
         }
     }
 }
