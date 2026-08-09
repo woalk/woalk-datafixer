@@ -1,7 +1,6 @@
 package com.woalk.mods.datafixer.mixin;
 
 import com.woalk.mods.datafixer.DatafixerModKt;
-import com.woalk.mods.datafixer.ModBlocks;
 import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.resources.Identifier;

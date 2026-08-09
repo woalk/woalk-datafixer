@@ -15,7 +15,11 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
 
 object ModBlocks {
-    val unknownBlock = register(id("unknown"), ::Block, BlockBehaviour.Properties.of()) { it.rarity(Rarity.EPIC) }
+    val unknownBlock = if (ConfigReader.generalConfig.unknownEnabled) {
+        register(id("unknown"), ::Block, BlockBehaviour.Properties.of()) { it.rarity(Rarity.EPIC) }
+    } else {
+        null
+    }
 
     //region Helpers
     fun id(id: String): BlockItemId {
@@ -47,8 +51,9 @@ object ModBlocks {
     //endregion
 
     fun registerAll() {
+        val block = unknownBlock ?: return
         ItemTooltipCallback.EVENT.register { stack, context, flag, components ->
-            if (stack.`is`(unknownBlock.asItem())) {
+            if (stack.`is`(block.asItem())) {
                 val text = Component.translatable("tooltip.wdf.unknown").withColor(TextColor.GRAY)
                 if (flag.isAdvanced) {
                     components.add(1, text)

@@ -7,6 +7,7 @@
     "MappedRegistryMixin",
     "PalettedContainerFactoryMixin"
   ],
+  "plugin": "com.woalk.mods.datafixer.mixin.UnknownReplacementConfig",
   "injectors": {
     "defaultRequire": 1
   },

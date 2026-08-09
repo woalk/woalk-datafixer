@@ -1,8 +1,11 @@
 package com.woalk.mods.datafixer
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.jsoizo.kotlincsv.csvReader
 import com.jsoizo.kotlincsv.reader.readFromFile
 import net.fabricmc.loader.api.FabricLoader
+import java.nio.file.Files
 import java.nio.file.Paths
 
 object ConfigReader {
@@ -10,10 +13,33 @@ object ConfigReader {
     fun itemMapping() = readCsv("item_mapping.csv")
     fun biomeMapping() = readCsv("biome_mapping.csv")
 
+    val generalConfig: GeneralConfig by lazy {
+        val json = readJson("config.json")
+        GeneralConfig(
+            unknownEnabled = json?.get("unknownEnabled")?.asBoolean ?: true
+        )
+    }
+
+    private fun readJson(fileName: String): JsonObject? {
+        val path = Paths.get(FabricLoader.getInstance().configDir.toString(), "datafixer", fileName)
+        if (!path.toFile().exists()) {
+             LOGGER.warn("Config file {} not found, using defaults", fileName)
+            return null
+        }
+        try {
+            Files.newBufferedReader(path).use { reader ->
+                return Gson().fromJson(reader, JsonObject::class.java)
+            }
+        } catch (e: Exception) {
+            LOGGER.error("Error reading config file {}", fileName, e)
+            return null
+        }
+    }
+
     private fun readCsv(fileName: String): Map<String, String> {
         val path = Paths.get(FabricLoader.getInstance().configDir.toString(), "datafixer", fileName)
         if (!path.toFile().exists()) {
-            LOGGER.error("Config file {} not found", fileName)
+            LOGGER.warn("Config file {} not found", fileName)
             return emptyMap()
         }
         try {
@@ -33,3 +59,7 @@ object ConfigReader {
         }
     }
 }
+
+data class GeneralConfig(
+    val unknownEnabled: Boolean
+)
