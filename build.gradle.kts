@@ -48,7 +48,7 @@ dependencies {
 
     implementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 
-    implementation("com.jsoizo:kotlin-csv:2.0.0")
+    include(implementation("com.jsoizo:kotlin-csv:2.0.0")!!)
     implementation("maven.modrinth:easy-data-fix:${project.property("easy_data_fixer_version")}")
 }
 
