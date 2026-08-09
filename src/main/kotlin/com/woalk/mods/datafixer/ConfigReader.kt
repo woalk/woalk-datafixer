@@ -45,12 +45,18 @@ object ConfigReader {
         try {
             val csvReader = csvReader()
             return csvReader.readFromFile(path.toString()) { rows ->
-                if (rows.first().size != 2) {
-                    LOGGER.error("Invalid config file {}: Expected 2 columns, found {}", fileName, rows.first().size)
+                if (rows.first().size != 2 && rows.first().size != 4) {
+                    LOGGER.error("Invalid config file {}: Expected 2 or 4 columns, found {}", fileName, rows.first().size)
                     return@readFromFile emptyMap()
                 }
                 return@readFromFile rows.toList().associate {
-                    Pair(it[0], it[1])
+                    if (it.size >= 4) {
+                        Pair("${it[0]}:${it[1]}", "${it[2]}:${it[3]}")
+                    } else if (it.size >= 2) {
+                        Pair(it[0], it[1])
+                    } else {
+                        Pair(it.toString(), "")
+                    }
                 }
             }
         } catch (e: Exception) {
