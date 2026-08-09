@@ -88,10 +88,13 @@ tasks.jar {
 }
 
 modrinth {
+    println("Changelog:\n# " + file("CHANGELOG.md").readText().split("\n# ")[1] + "\n====")
+
     token.set(System.getenv("MODRINTH_TOKEN"))
     projectId.set("wdf")
     versionType.set("release")
     uploadFile.set(tasks.jar)
+    changelog.set("# " + file("CHANGELOG.md").readText().split("\n# ")[1])
     dependencies {
         required.project("fabric-api")
         required.project("fabric-language-kotlin")
