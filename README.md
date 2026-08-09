@@ -22,23 +22,31 @@ and need to preserve world data.
     - Fabric API
     - Easy Data Fix
 
-For multiplayer servers, the mod needs to be installed on both client and server,
-to ensure that the fallback item is properly registered.
+For multiplayer servers, the mod needs to be installed on both client and server to ensure that the fallback item is properly registered.
+However, it can also be used as a server-side-only mod by disabling the fallback block in the configuration (see below).
 
 ## Configuration
 
-The mod reads mapping tables from the `config/datafixer/` directory in your Minecraft instance. You can create the following files:
+The mod reads configuration from the `config/datafixer/` directory in your Minecraft instance.
+
+### Mappings
+
+You can create the following CSV files for mapping registry entries:
 
 - `block_mapping.csv`
 - `item_mapping.csv`
 - `biome_mapping.csv`
 
-### CSV Format
+The CSV files should be simple tables without headers. Each row represents a mapping. Two formats are supported:
 
-The CSV files should be simple two-column tables without headers. Each row represents a mapping:
-
+**2-column format (Combined ID):**
 ```csv
 old_namespace:old_path,new_namespace:new_path
+```
+
+**4-column format (Split namespace and path):**
+```csv
+old_namespace,old_path,new_namespace,new_path
 ```
 
 **Example (`block_mapping.csv`):**
@@ -49,6 +57,19 @@ byg:yellow_birch_leaves,minecraft:birch_leaves
 ```
 
 *Note: The block mapping table is also used to remap the corresponding BlockItems.*
+
+### General Configuration
+
+Create a `config.json` file in the same directory for general settings:
+
+```json
+{
+  "unknownEnabled": true
+}
+```
+
+- `unknownEnabled` (default: `true`): If set to `false`, the fallback "Unknown" item/block will be disabled.
+  This allows the mod to be used as a **server-side-only** mod, as no new blocks or items are registered.
 
 ## License
 
