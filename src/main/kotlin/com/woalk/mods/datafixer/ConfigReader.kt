@@ -3,7 +3,7 @@ package com.woalk.mods.datafixer
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.jsoizo.kotlincsv.csvReader
-import com.jsoizo.kotlincsv.reader.readFromFile
+import com.jsoizo.kotlincsv.reader.readAllFromFile
 import net.fabricmc.loader.api.FabricLoader
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -44,21 +44,24 @@ object ConfigReader {
         }
         try {
             val csvReader = csvReader()
-            return csvReader.readFromFile(path.toString()) { rows ->
-                if (rows.first().size != 2 && rows.first().size != 4) {
-                    LOGGER.error("Invalid config file {}: Expected 2 or 4 columns, found {}", fileName, rows.first().size)
-                    return@readFromFile emptyMap()
-                }
-                return@readFromFile rows.toList().associate {
-                    if (it.size >= 4) {
-                        Pair("${it[0]}:${it[1]}", "${it[2]}:${it[3]}")
-                    } else if (it.size >= 2) {
-                        Pair(it[0], it[1])
-                    } else {
-                        Pair(it.toString(), "")
-                    }
+            val rows = csvReader.readAllFromFile(path.toString())
+            if (rows.firstOrNull()?.size != 2 && rows.firstOrNull()?.size != 4) {
+                LOGGER.error(
+                    "Invalid config file {}: Expected 2 or 4 columns, found {}",
+                    fileName, rows.firstOrNull()?.size
+                )
+                return emptyMap()
+            }
+            val map = rows.toList().filter { it.first().run { this.lowercase() == this } }.associate {
+                if (it.size >= 4) {
+                    Pair("${it[0]}:${it[1]}", "${it[2]}:${it[3]}")
+                } else if (it.size >= 2) {
+                    Pair(it[0], it[1])
+                } else {
+                    Pair(it.toString(), "")
                 }
             }
+            return map
         } catch (e: Exception) {
             LOGGER.error("Error reading config file {}", fileName, e)
             return emptyMap()
