@@ -8,19 +8,15 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-import java.util.Map;
-
 public class SignDataFixTest {
     @BeforeAll
     static void boot() {
-        Config.Companion.setINSTANCE(TestConfigObject.INSTANCE);
+        Config.Companion.setReplacementConfig(TestConfigObject.INSTANCE);
         SharedConstants.tryDetectVersion();
         Bootstrap.bootStrap();
     }

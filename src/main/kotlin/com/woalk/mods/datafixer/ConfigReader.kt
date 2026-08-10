@@ -16,8 +16,11 @@ interface Config {
     val generalConfig: GeneralConfig
 
     companion object {
+        var replacementConfig: Config? = null
+
         @JvmStatic
-        var INSTANCE: Config = ConfigReader
+        val instance: Config
+            get() = replacementConfig ?: ConfigReader
     }
 }
 

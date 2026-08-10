@@ -23,7 +23,7 @@ abstract class V1460Mixin {
             return;
         }
 
-        final var signs = Config.Companion.getINSTANCE().signMapping();
+        final var signs = Config.Companion.getInstance().signMapping();
         final var signTemplate = map.get("minecraft:sign");
 
         for (var sign : signs) {

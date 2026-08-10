@@ -10,7 +10,7 @@ import java.util.function.Supplier
 class MySchema(versionKey: Int, parent: Schema) : NamespacedSchema(versionKey, parent) {
     override fun registerBlockEntities(schema: Schema): Map<String, Supplier<TypeTemplate>> {
         val map = super.registerBlockEntities(schema)
-        val signs = Config.INSTANCE.signMapping()
+        val signs = Config.instance.signMapping()
         val signTemplate = map["minecraft:sign"]
         for (signId in signs) {
             register(map, signId, signTemplate ?: Supplier { V99.sign(schema) })
@@ -22,7 +22,7 @@ class MySchema(versionKey: Int, parent: Schema) : NamespacedSchema(versionKey, p
 class MySchema2(versionKey: Int, parent: Schema) : NamespacedSchema(versionKey, parent) {
     override fun registerBlockEntities(schema: Schema): Map<String, Supplier<TypeTemplate>> {
         val map = super.registerBlockEntities(schema)
-        val signs = Config.INSTANCE.signMapping()
+        val signs = Config.instance.signMapping()
         val signTemplate = map["minecraft:sign"]
         for (signId in signs) {
             register(map, signId, signTemplate ?: Supplier { V3439.sign(schema) })

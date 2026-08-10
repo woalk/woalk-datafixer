@@ -21,7 +21,7 @@ public class UnknownReplacementConfig implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        final var enabled = Config.Companion.getINSTANCE().getGeneralConfig().getUnknownEnabled();
+        final var enabled = Config.Companion.getInstance().getGeneralConfig().getUnknownEnabled();
         if (!enabled) {
             DatafixerModKt.getLOGGER().info("Unknown replacements are disabled.");
             return !mixinClassName.contains("unknown");

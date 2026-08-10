@@ -45,7 +45,7 @@ abstract class DataFixersMixin {
      */
     @Inject(method = "addFixers", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/datafix/fixes/BlockEntitySignDoubleSidedEditableTextFix;<init>(Lcom/mojang/datafixers/schemas/Schema;Ljava/lang/String;Ljava/lang/String;)V", ordinal = 1, shift = At.Shift.AFTER))
     private static void wdf$addFixers(DataFixerBuilder fixerUpper, FileFixerUpper.Builder fileFixerUpper, CallbackInfo ci) {
-        final var signs = Config.Companion.getINSTANCE().signMapping();
+        final var signs = Config.Companion.getInstance().signMapping();
         if (signs.isEmpty()) {
             return;
         }
