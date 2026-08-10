@@ -24,7 +24,7 @@ public class UnknownReplacementConfig implements IMixinConfigPlugin {
         final var enabled = ConfigReader.INSTANCE.getGeneralConfig().getUnknownEnabled();
         if (!enabled) {
             DatafixerModKt.getLOGGER().info("Unknown replacements are disabled.");
-            return false;
+            return !mixinClassName.contains("unknown");
         }
         return true;
     }

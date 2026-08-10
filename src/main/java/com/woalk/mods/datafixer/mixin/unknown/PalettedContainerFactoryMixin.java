@@ -1,4 +1,4 @@
-package com.woalk.mods.datafixer.mixin;
+package com.woalk.mods.datafixer.mixin.unknown;
 
 import com.woalk.mods.datafixer.ModBlocks;
 import net.minecraft.world.level.block.Block;

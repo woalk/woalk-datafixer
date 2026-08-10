@@ -4,8 +4,8 @@
   "package": "com.woalk.mods.datafixer.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "MappedRegistryMixin",
-    "PalettedContainerFactoryMixin"
+    "unknown.MappedRegistryMixin",
+    "unknown.PalettedContainerFactoryMixin"
   ],
   "plugin": "com.woalk.mods.datafixer.mixin.UnknownReplacementConfig",
   "injectors": {
