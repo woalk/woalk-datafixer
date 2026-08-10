@@ -8,13 +8,26 @@ import net.fabricmc.loader.api.FabricLoader
 import java.nio.file.Files
 import java.nio.file.Paths
 
-object ConfigReader {
-    fun blockMapping() = readCsv("block_mapping.csv")
-    fun itemMapping() = readCsv("item_mapping.csv")
-    fun biomeMapping() = readCsv("biome_mapping.csv")
-    fun signMapping() = readTxt("sign_list.txt")
+interface Config {
+    fun blockMapping(): Map<String, String>
+    fun itemMapping(): Map<String, String>
+    fun biomeMapping(): Map<String, String>
+    fun signMapping(): List<String>
+    val generalConfig: GeneralConfig
 
-    val generalConfig: GeneralConfig by lazy {
+    companion object {
+        @JvmStatic
+        var INSTANCE: Config = ConfigReader
+    }
+}
+
+private object ConfigReader : Config {
+    override fun blockMapping() = readCsv("block_mapping.csv")
+    override fun itemMapping() = readCsv("item_mapping.csv")
+    override fun biomeMapping() = readCsv("biome_mapping.csv")
+    override fun signMapping() = readTxt("sign_list.txt")
+
+    override val generalConfig: GeneralConfig by lazy {
         val json = readJson("config.json")
         GeneralConfig(
             unknownEnabled = json?.get("unknownEnabled")?.asBoolean ?: true

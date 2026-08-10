@@ -2,7 +2,7 @@ package com.woalk.mods.datafixer.mixin;
 
 import com.mojang.datafixers.schemas.Schema;
 import com.mojang.datafixers.types.templates.TypeTemplate;
-import com.woalk.mods.datafixer.ConfigReader;
+import com.woalk.mods.datafixer.Config;
 import net.minecraft.util.datafix.schemas.V1460;
 import net.minecraft.util.datafix.schemas.V99;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +23,7 @@ abstract class V1460Mixin {
             return;
         }
 
-        final var signs = ConfigReader.INSTANCE.signMapping();
+        final var signs = Config.Companion.getINSTANCE().signMapping();
         final var signTemplate = map.get("minecraft:sign");
 
         for (var sign : signs) {

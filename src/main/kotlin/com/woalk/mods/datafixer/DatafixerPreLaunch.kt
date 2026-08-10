@@ -11,9 +11,9 @@ import net.minecraft.util.datafix.schemas.NamespacedSchema
 
 class DatafixerPreLaunch: PreLaunchEntrypoint {
     override fun onPreLaunch() {
-        val blockMapping = ConfigReader.blockMapping()
-        val itemMapping = ConfigReader.itemMapping()
-        val biomeMapping = ConfigReader.biomeMapping()
+        val blockMapping = Config.INSTANCE.blockMapping()
+        val itemMapping = Config.INSTANCE.itemMapping()
+        val biomeMapping = Config.INSTANCE.biomeMapping()
 
         registerDataFix { builder ->
             val schema = builder.addSchema(DATA_VERSION_26_2, ::NamespacedSchema)
