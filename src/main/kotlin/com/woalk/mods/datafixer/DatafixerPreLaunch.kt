@@ -1,5 +1,4 @@
 package com.woalk.mods.datafixer
-
 import com.mojang.datafixers.DataFixerBuilder
 import me.voxelbill.easy_data_fix.common.api.DataFixerAPI
 import me.voxelbill.easy_data_fix.common.api.DataFixerRegistry
@@ -8,7 +7,7 @@ import net.minecraft.util.datafix.fixes.BlockRenameFix
 import net.minecraft.util.datafix.fixes.ItemRenameFix
 import net.minecraft.util.datafix.fixes.NamespacedTypeRenameFix
 import net.minecraft.util.datafix.fixes.References
-import net.minecraft.util.datafix.schemas.V4885
+import net.minecraft.util.datafix.schemas.NamespacedSchema
 
 class DatafixerPreLaunch: PreLaunchEntrypoint {
     override fun onPreLaunch() {
@@ -17,7 +16,7 @@ class DatafixerPreLaunch: PreLaunchEntrypoint {
         val biomeMapping = ConfigReader.biomeMapping()
 
         registerDataFix { builder ->
-            val schema = builder.addSchema(DATA_VERSION_26_2, ::V4885)
+            val schema = builder.addSchema(DATA_VERSION_26_2, ::NamespacedSchema)
             // blocks
             builder.addFixer(
                 BlockRenameFix.create(

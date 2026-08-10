@@ -12,6 +12,7 @@ object ConfigReader {
     fun blockMapping() = readCsv("block_mapping.csv")
     fun itemMapping() = readCsv("item_mapping.csv")
     fun biomeMapping() = readCsv("biome_mapping.csv")
+    fun signMapping() = readTxt("sign_list.txt")
 
     val generalConfig: GeneralConfig by lazy {
         val json = readJson("config.json")
@@ -39,7 +40,7 @@ object ConfigReader {
     private fun readCsv(fileName: String): Map<String, String> {
         val path = Paths.get(FabricLoader.getInstance().configDir.toString(), "datafixer", fileName)
         if (!path.toFile().exists()) {
-            LOGGER.warn("Config file {} not found", fileName)
+            LOGGER.warn("Config CSV file {} not found", fileName)
             return emptyMap()
         }
         try {
@@ -47,7 +48,7 @@ object ConfigReader {
             val rows = csvReader.readAllFromFile(path.toString())
             if (rows.firstOrNull()?.size != 2 && rows.firstOrNull()?.size != 4) {
                 LOGGER.error(
-                    "Invalid config file {}: Expected 2 or 4 columns, found {}",
+                    "Invalid config CSV file {}: Expected 2 or 4 columns, found {}",
                     fileName, rows.firstOrNull()?.size
                 )
                 return emptyMap()
@@ -63,8 +64,22 @@ object ConfigReader {
             }
             return map
         } catch (e: Exception) {
-            LOGGER.error("Error reading config file {}", fileName, e)
+            LOGGER.error("Error reading config CSV file {}", fileName, e)
             return emptyMap()
+        }
+    }
+
+    fun readTxt(fileName: String): List<String> {
+        val path = Paths.get(FabricLoader.getInstance().configDir.toString(), "datafixer", fileName)
+        if (!path.toFile().exists()) {
+            LOGGER.warn("Config TXT file {} not found", fileName)
+            return emptyList()
+        }
+        return try {
+            Files.readAllLines(path)
+        } catch (e: Exception) {
+            LOGGER.error("Error reading config TXT file {}", fileName, e)
+            emptyList()
         }
     }
 }
