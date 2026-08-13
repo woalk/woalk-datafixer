@@ -1,4 +1,5 @@
 stages:
+  - test
   - build
   - publish
 
@@ -12,6 +13,15 @@ cache:
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
+
+fabric junit:
+  stage: test
+  script:
+    - ./gradlew test
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/test/TEST-*.xml
 
 build:
   stage: build

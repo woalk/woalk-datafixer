@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
 
 object ModBlocks {
-    val unknownBlock = if (ConfigReader.generalConfig.unknownEnabled) {
+    val unknownBlock = if (Config.instance.generalConfig.unknownEnabled) {
         register(id("unknown"), ::Block, BlockBehaviour.Properties.of()) { it.rarity(Rarity.EPIC) }
     } else {
         null

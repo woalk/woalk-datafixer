@@ -1,6 +1,6 @@
 package com.woalk.mods.datafixer.mixin;
 
-import com.woalk.mods.datafixer.ConfigReader;
+import com.woalk.mods.datafixer.Config;
 import com.woalk.mods.datafixer.DatafixerModKt;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -21,10 +21,10 @@ public class UnknownReplacementConfig implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        final var enabled = ConfigReader.INSTANCE.getGeneralConfig().getUnknownEnabled();
+        final var enabled = Config.Companion.getInstance().getGeneralConfig().getUnknownEnabled();
         if (!enabled) {
             DatafixerModKt.getLOGGER().info("Unknown replacements are disabled.");
-            return false;
+            return !mixinClassName.contains("unknown");
         }
         return true;
     }

@@ -50,6 +50,16 @@ dependencies {
 
     include(implementation("com.jsoizo:kotlin-csv:2.0.0")!!)
     implementation("maven.modrinth:easy-data-fix:${project.property("easy_data_fixer_version")}")
+
+    testImplementation("net.fabricmc:fabric-loader-junit:${project.property("loader_version")}")
+}
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+        events("passed", "failed", "skipped")
+    }
 }
 
 tasks.processResources {
