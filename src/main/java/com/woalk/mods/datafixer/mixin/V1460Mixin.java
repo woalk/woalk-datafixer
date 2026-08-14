@@ -3,6 +3,7 @@ package com.woalk.mods.datafixer.mixin;
 import com.mojang.datafixers.schemas.Schema;
 import com.mojang.datafixers.types.templates.TypeTemplate;
 import com.woalk.mods.datafixer.Config;
+import com.woalk.mods.datafixer.MySchema;
 import net.minecraft.util.datafix.schemas.V1460;
 import net.minecraft.util.datafix.schemas.V99;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,14 +25,13 @@ abstract class V1460Mixin {
         }
 
         final var signs = Config.Companion.getInstance().signMapping();
-        final var signTemplate = map.get("minecraft:sign");
+        var signTemplate = map.get("minecraft:sign");
+        if (signTemplate == null) {
+            signTemplate = () -> V99.sign(schema);
+        }
 
         for (var sign : signs) {
-            if (signTemplate != null) {
-                schema.register(map, sign, signTemplate);
-            } else {
-                schema.register(map, sign, () -> V99.sign(schema));
-            }
+            schema.register(map, sign, signTemplate);
         }
     }
 }

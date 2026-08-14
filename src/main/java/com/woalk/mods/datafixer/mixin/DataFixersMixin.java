@@ -4,7 +4,7 @@ import com.mojang.datafixers.DataFixerBuilder;
 import com.mojang.datafixers.schemas.Schema;
 import com.woalk.mods.datafixer.Config;
 import com.woalk.mods.datafixer.CustomSignFix;
-import com.woalk.mods.datafixer.MySchema2;
+import com.woalk.mods.datafixer.MySchema;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.BlockEntitySignDoubleSidedEditableTextFix;
 import net.minecraft.util.filefix.FileFixerUpper;
@@ -50,10 +50,7 @@ abstract class DataFixersMixin {
             return;
         }
 
-        int subVersion = 2;
-        for (var sign : signs) {
-            final Schema schema = fixerUpper.addSchema(3439, subVersion++, MySchema2::new);
-            fixerUpper.addFixer(new CustomSignFix(schema, sign));
-        }
+        final Schema schema = fixerUpper.addSchema(3439, 2, MySchema::new);
+        fixerUpper.addFixer(new CustomSignFix(schema, signs.get(0)));
     }
 }

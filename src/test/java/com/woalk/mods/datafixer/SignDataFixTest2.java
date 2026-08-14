@@ -13,12 +13,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SignDataFixTest {
+public class SignDataFixTest2 {
     @BeforeAll
     static void boot() {
-        Config.Companion.setReplacementConfig(new TestConfigObject(List.of("ecologics:sign")));
+        Config.Companion.setReplacementConfig(new TestConfigObject(List.of("ecologics:sign", "graveyard:gravestone_sign_entity")));
         SharedConstants.tryDetectVersion();
         Bootstrap.bootStrap();
     }

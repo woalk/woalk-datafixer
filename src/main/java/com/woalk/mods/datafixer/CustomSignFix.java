@@ -59,6 +59,13 @@ public class CustomSignFix extends DataFix {
     }
 
     private static <T> Dynamic<T> fixData(Dynamic<T> input) {
+        String id = input.get("id").asString("unknown");
+        if (!Config.Companion.getInstance().signMapping().contains(id)) {
+            return input;
+        }
+        if (input.get("front_text").result().isPresent()) {
+            return input;
+        }
         input = input.set("front_text", fixFrontTextTag(input))
             .set("back_text", createDefaultText(input))
             .set("is_waxed", input.createBoolean(false))
